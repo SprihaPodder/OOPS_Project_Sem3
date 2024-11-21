@@ -1,7 +1,7 @@
 import sqlite3
 import tkinter as tk
 from tkinter import messagebox
-from database import create_database, add_user, add_booking, get_booking_analysis
+from database import create_database, add_user, add_booking, get_booking_analysis, get_all_bookings
 import matplotlib.pyplot as plt
 
 class HallTicketBookingApp:
@@ -50,6 +50,9 @@ class HallTicketBookingApp:
         self.analysis_button = tk.Button(root, text="Show Booking Analysis", command=self.show_analysis)
         self.analysis_button.pack()
 
+        self.view_bookings_button = tk.Button(root, text="View All Bookings", command=self.view_bookings)
+        self.view_bookings_button.pack()
+
     def register_user(self):
         name = self.name_entry.get()
         email = self.email_entry.get()
@@ -81,6 +84,11 @@ class HallTicketBookingApp:
         plt.ylabel('Total Seats Booked')
         plt.title('Booking Analysis')
         plt.show()
+
+    def view_bookings(self):
+        bookings = get_all_bookings()
+        booking_details = "\n".join([f"Booking ID: {b[0]}, User ID: {b[1]}, Event: {b[2]}, Date: {b[3]}, Seats: {b[4]}" for b in bookings])
+        messagebox.showinfo("All Bookings", booking_details)
 
 if __name__ == "__main__":
     create_database()  # Create the database and tables

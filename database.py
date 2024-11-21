@@ -48,3 +48,11 @@ def get_booking_analysis():
     data = cursor.fetchall()
     conn.close()
     return data
+
+def get_all_bookings():
+    conn = sqlite3.connect('hall_ticket_booking.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM bookings')
+    data = cursor.fetchall()
+    conn.close()
+    return data
